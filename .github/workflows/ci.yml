@@ -14,7 +14,7 @@ jobs:
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: 3.12.1
+          python-version: 3.12
 
       - name: Install dependencies
         run: |
@@ -28,7 +28,7 @@ jobs:
           ruff check .
 
   test:
-    name:
+    name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: build
@@ -40,7 +40,7 @@ jobs:
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: 3.12.1
+          python-version: 3.12
 
       - name: Install dependencies
         run: |
@@ -49,4 +49,25 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest -vv -cov="." tests/
+          make test
+
+  test-docker:
+    name: Test Docker Image
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: build
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t api:latest .
+
+      - name: Start a container and run tests
+        run: |
+          docker run --name api-test -e PORT=8000 api:latest
+
+      - name: Run tests
+        run: |
+          docker exec api-test pytest -p no:warnings tests/
