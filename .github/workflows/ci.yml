@@ -66,7 +66,7 @@ jobs:
 
       - name: Start a container and run tests
         run: |
-          docker run --name api-test -e PORT=8000 api:latest
+          docker run -d --name api-test -e PORT=8000 api:latest
 
       - name: Run tests
         run: |
