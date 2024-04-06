@@ -47,5 +47,6 @@ async def get_counter() -> JSONResponse:
         A JSON response containing the current count of requests.
     """
     counter = Counter()
+    counter.increment()
     response = CounterResponse(count=counter.get_count())
     return JSONResponse(content=response.model_dump())

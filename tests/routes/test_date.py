@@ -6,10 +6,10 @@ from tests.conftest import test_app  # noqa
 
 
 @pytest.mark.run(order=1)
-def test_counter(test_app):  # noqa
+def test_counter_initial(test_app):  # noqa
     response = test_app.get("/date/counter")
     assert response.status_code == 200
-    assert response.json()["count"] == 0
+    assert response.json()["count"] == 1
 
 
 @pytest.mark.run(order=2)
@@ -26,7 +26,7 @@ def test_date(test_app):  # noqa
 
 
 @pytest.mark.run(order=3)
-def test_counter_1(test_app):  # noqa
+def test_counter_after(test_app):  # noqa
     response = test_app.get("/date/counter")
     assert response.status_code == 200
-    assert response.json()["count"] == 2
+    assert response.json()["count"] == 4

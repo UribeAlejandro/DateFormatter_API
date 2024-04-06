@@ -1,16 +1,39 @@
-# Date Formatter - API
+# Date Formatter - API <!-- omit in toc -->
 
 This is a simple API that returns today's date or current time. This is part of the interview process for the position of Machine Learning Engineer.
 
-## Table of contents
+## Table of contents <!-- omit in toc -->
 
-Lorem Ipsum
+- [Requirements](#requirements)
+- [Architecture](#architecture)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Virtual Environment](#virtual-environment)
+  - [Docker](#docker)
+- [Testing](#testing)
+- [References](#references)
+
 
 ## Requirements
 
 > The second exercise consists of implementing an API in Python using FastAPI or in Golang that receives:
 > - A POST request with a boolean parameter that responds with the current date in the format yyyy-mm-dd hh:ii:ss if the parameter is true, and returns the date in the format yyyy-dd-mm if the parameter is false.
 > - A GET request that retrieves the value of a counter indicating how many times either of the two endpoints was called.
+
+## Architecture
+
+The API is built using FastAPI, a modern web framework for building APIs with Python. The API is containerized using Docker and docker-compose. The API is tested using Pytest.
+
+The API has the following endpoints:
+
+| Endpoint      | HTTP Method | Result                            |
+| ------------- | ----------- | --------------------------------- |
+| /             | GET         | Greeting message                  |
+| /date         | POST        | Get the current date or timestamp |
+| /date/counter | GET         | Get the                           |
+| /health       | GET         | update a summary                  |
+
+The route `date/` implements a [thread-safe Singleton](https://refactoring.guru/design-patterns/singleton) pattern to keep track of the number of times the endpoint was called. The counter is incremented every time the endpoint (`date/` *or* `data/counter`) is called.
 
 ## Installation
 
@@ -60,7 +83,6 @@ To stop the API, run the following command:
 docker-compose down -v
 ```
 
-
 ## Testing
 
 To run the tests (on top of the virtualenv), run the following command:
@@ -69,19 +91,16 @@ To run the tests (on top of the virtualenv), run the following command:
 make test
 ```
 
-Otherwise, using Docker:
+Or using Docker:
 
 ```bash
 docker-compose exec api pytest tests/
 ```
 
-## API Endpoints
+## References
 
-The following endpoints are available:
-
-| Endpoint        | HTTP Method	 | Result                            |
-|-----------------|--------------|-----------------------------------|
-| /	              | GET          | Greeting message                  |
-| /date	          | POST	        | Get the current date or timestamp |
-| /date/counter   | 	GET         | 	Get the                          |
-| /health	        | GET	         | 	update a summary                 |
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Pytest](https://docs.pytest.org/)
+- [Refactoring Guru](https://refactoring.guru/)
