@@ -2,16 +2,16 @@ import logging
 
 from fastapi import FastAPI
 
-from src.routes import date, health, index
+from src.routes import counter, date, index
 
 log = logging.getLogger("uvicorn")
 
 
 def create_application() -> FastAPI:
     application = FastAPI()
+    application.include_router(date.router, tags=["date"])
     application.include_router(index.router, tags=["index"])
-    application.include_router(date.router, tags=["date"], prefix="/date")
-    application.include_router(health.router, tags=["health"], prefix="/health")
+    application.include_router(counter.router, tags=["counter"])
 
     return application
 

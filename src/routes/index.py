@@ -14,3 +14,15 @@ async def root() -> JSONResponse:
         Welcome message.
     """
     return JSONResponse({"message": "Welcome to Date Formatter!"})
+
+
+@router.get("/health", status_code=200)
+async def get_health() -> JSONResponse:
+    """Health check endpoint.
+
+    Returns
+    -------
+    JSONResponse
+        Status of the API.
+    """
+    return JSONResponse({"status": "OK"})

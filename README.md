@@ -6,6 +6,8 @@ This is a simple API that returns today's date or current time. This is part of 
 
 - [Requirements](#requirements)
 - [Architecture](#architecture)
+  - [API Implementation](#api-implementation)
+  - [Continuous Integration](#continuous-integration)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Virtual Environment](#virtual-environment)
@@ -26,14 +28,24 @@ The API is built using FastAPI, a modern web framework for building APIs with Py
 
 The API has the following endpoints:
 
-| Endpoint      | HTTP Method | Result                            |
-| ------------- | ----------- | --------------------------------- |
-| /             | GET         | Greeting message                  |
-| /date         | POST        | Get the current date or timestamp |
-| /date/counter | GET         | Get the                           |
-| /health       | GET         | update a summary                  |
+| Endpoint | HTTP Method | Result                                                   |
+| -------- | ----------- | -------------------------------------------------------- |
+| /        | GET         | Greeting message                                         |
+| /date    | POST        | Get the current date or timestamp                        |
+| /counter | GET         | Get the number of calls to `/counter` and `/date` routes |
+| /health  | GET         | Health status                                            |
 
-The route `date/` implements a [thread-safe Singleton](https://refactoring.guru/design-patterns/singleton) pattern to keep track of the number of times the endpoint was called. The counter is incremented every time the endpoint (`date/` *or* `data/counter`) is called.
+### API Implementation
+
+The API implements a [thread-safe Singleton](https://refactoring.guru/design-patterns/singleton) pattern to keep track of the number of times the endpoints (`/date` *or* `/counter`) were called. The counter is incremented every time the stated endpoints are called.
+
+### Continuous Integration
+
+The API uses GitHub Actions to run the tests on every push to the repository. The runner does the following:
+
+- Assess the code quality using `ruff`, `black`, `isort`, etc.
+- The Docker image is built.
+- The tests run twice: inside a docker container and on a virtual environment. The tests are run using `Pytest`.
 
 ## Installation
 
