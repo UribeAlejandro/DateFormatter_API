@@ -7,7 +7,7 @@ from tests.conftest import test_app  # noqa
 
 @pytest.mark.run(order=1)
 def test_counter_initial(test_app):  # noqa
-    response = test_app.get("/date/counter")
+    response = test_app.get("/counter")
     assert response.status_code == 200
     assert response.json()["count"] == 1
 
@@ -27,6 +27,6 @@ def test_date(test_app):  # noqa
 
 @pytest.mark.run(order=3)
 def test_counter_after(test_app):  # noqa
-    response = test_app.get("/date/counter")
+    response = test_app.get("/counter")
     assert response.status_code == 200
     assert response.json()["count"] == 4
